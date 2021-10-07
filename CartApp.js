@@ -7,15 +7,16 @@ En esta entrega:
  3. Tiena una lista de productos.
  4. La lista de productos lo muestro dentro de cada menu categoria con metodos concatenados filter(), map() y join().  
  5. El carrito para esta ocasión no precise obejto ni función porque es una variable acumulador.
- 6. El carrito se muestra en el menu si tiene cargado al menos un producto.
- 7. En el html hay un <script> para clickear boton recargar pagina.
+ 6. Filtro en productos notebooks
+ 7. El carrito se muestra en el menu si tiene cargado al menos un producto.
+ 8. En el html hay un <script> para clickear boton recargar pagina.
  */
 
 
-/**Precios Notebooks */
-const compuAcer16GB = new Product('Notebook Acer 16GB', 'notebooks', 100000);
-const compuDell8GB = new Product('Notebook Dell 8GB', 'notebooks', 80000);
-const compuLenovo32GB = new Product('Notebook Lenovo 32GB', 'notebooks', 150000);
+/**Precios Notebooks Notebook*/
+const compuAcer16GB = new Product('Acer 16GB', 'notebooks', 100000);
+const compuDell8GB = new Product('Dell 8GB', 'notebooks', 80000);
+const compuLenovo32GB = new Product('Lenovo 32GB', 'notebooks', 150000);
 
 /**Precios Teclados*/
 const tecladoMembrana = new Product('Teclado Membrana Logic', 'teclados', 6000);
@@ -28,9 +29,9 @@ const libroBaseDeDatos = new Product('Libro Base De Datos', 'libros', 6000);
 const libroReact = new Product('Libro Ejercicios Practicos Con React', 'libros', 4500);
 
 const productsList = [
-	compuAcer16GB,
 	compuDell8GB,
 	compuLenovo32GB,
+	compuAcer16GB,
 	tecladoMembrana,
 	tecladoMecanico,
 	tecladoMecanicoNisuta,
@@ -97,30 +98,16 @@ Click en Aceptar para volver a cargar valor
 				do {
 					menu = dialog.readOption(`
 	${menu === 'N' ? arrayNotebooks = productsList
+							.sort((a, b) => a.getName() - b.getName())
 							.filter(item => item.category === 'notebooks')
 							.map((item, index) => {
 								return ++index + " - " + item.getName() + " " + Currency.formatARS(item.getPrice())
 							})
-							.sort(function (a, b) {
-								// TO-DO probar usar sort dentro de map (arriba) para comparar x precio
-								if (a > b) {
-									return 1;
-								}
-								if (a < b) {
-									return -1;
-								}
-								// a must be equal to b
-								return 0;
-							})
 							.join(" \n")
 							:
 							menu === 'A' ? arrayNotebooks = productsList
-								.filter(item => item.category === 'notebooks')
-								.map((item, index) => {
-									return ++index + " - " + item.getName() + " " + Currency.formatARS(item.getPrice())
-								})
 								.sort(function (a, b) {
-									if (a > b) {
+									if (a.getPrice() < b.getPrice()) {
 										return -1;
 									}
 									if (a < b) {
@@ -129,14 +116,27 @@ Click en Aceptar para volver a cargar valor
 									// a must be equal to b
 									return 0;
 								})
+								.filter(item => item.category === 'notebooks')
+								.map((item, index) => {
+									return ++index + " - " + item.getName() + " " + Currency.formatARS(item.getPrice())
+								})
 								.join(" \n")
 								:
 								arrayNotebooks = productsList
+									.sort(function (a, b) {
+										if (a.getPrice() > b.getPrice()) {
+											return -1;
+										}
+										if (a < b) {
+											return 1;
+										}
+										// a must be equal to b
+										return 0;
+									})
 									.filter(item => item.category === 'notebooks')
 									.map((item, index) => {
 										return ++index + " - " + item.getName() + " " + Currency.formatARS(item.getPrice())
 									})
-									.reverse()
 									.join(" \n")
 
 
