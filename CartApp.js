@@ -56,11 +56,25 @@ ${carrito > 0 ? 'PARA FINALIZAR COMPRA INGRESA LETRA: (s)' : ''}
 `);
 	// console.log(menu);
 	if (menu === 's' && carrito > 0) {
-		alert(`
-Subtotal: ${Currency.formatARS(carrito)} 
-Iva: ${Currency.formatARS(Calculo.iva(carrito))}
-Total: ${Currency.formatARS(Calculo.total(carrito))}
-Gracias por su compra!`);
+		let pricingHeader = document.querySelector('.pricing-header');
+		let newUl = document.createElement('ul');
+		newUl.className = 'list-group';
+		pricingHeader.appendChild(newUl);
+		newUl.innerHTML = `
+			<li class="list-group-item">Subtotal: ${Currency.formatARS(carrito)} </li>
+			<li class="list-group-item">Iva: ${Currency.formatARS(Calculo.iva(carrito))}</li>
+			<li class="list-group-item">Total: ${Currency.formatARS(Calculo.total(carrito))}</li>
+
+			<div class="alert alert-success" role="alert">
+				Gracias por su compra!
+			</div>
+		`;
+
+		// 		alert(`
+		// Subtotal: ${Currency.formatARS(carrito)} 
+		// Iva: ${Currency.formatARS(Calculo.iva(carrito))}
+		// Total: ${Currency.formatARS(Calculo.total(carrito))}
+		// Gracias por su compra!`);
 		break;
 	}
 	switch (menu) {
