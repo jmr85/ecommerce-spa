@@ -26,13 +26,7 @@ const productsList = [
 ];
 
 let menu;
-let acumulador = 0;
 let carrito = [];
-let carritoTest = [
-	{ price: libroReact.price, product: libroReact },
-	{ price: libroBaseDeDatos.price, product: libroBaseDeDatos },
-	{ price: libroJavaAFondo.price, product: libroJavaAFondo }
-];
 
 const dialog = new Dialog();
 
