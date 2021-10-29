@@ -27,3 +27,9 @@ tbody img {
     border-radius: 10px;
     color: white;
 }
+
+#vaciar-carrito{
+    background-color: #426be4;
+    color: white;
+    border-color: #426be4;
+}
