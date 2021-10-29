@@ -33,3 +33,8 @@ tbody img {
     color: white;
     border-color: #426be4;
 }
+.card{
+    display: flex;
+    flex-direction: column; 
+    justify-content: end;
+}
