@@ -17,3 +17,13 @@
     padding: 20px;
     min-width: 300px;
 }
+tbody img {
+	width: 100%;
+}
+.vacio {
+    padding: 10px;
+    background-color: crimson;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+}

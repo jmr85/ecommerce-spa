@@ -1,16 +1,26 @@
 const listaProductos = document.querySelector('#lista-productos');
 const tableCarrito = document.querySelector('#lista-carrito tbody');
-const formBuscador = document.querySelector('#formulario');
 const btnVaciarCarrito = document.querySelector('#vaciar-carrito');
 
 let carrito;
 
 document.addEventListener("DOMContentLoaded", () => {
+
+	const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
+
+	carrito = carritoStorage || [];
+
+	if (carrito.length === 0) {
+		document.querySelector('#img-carrito').hidden = true;
+	} else {
+		document.querySelector('#img-carrito').hidden = false;
+	}
+	actualizarCarritoHTML();
+
 	productList(productos);
 });
 
 listaProductos.addEventListener('click', agregarProducto);
-formBuscador.addEventListener('submit', buscarProductos);
 tableCarrito.addEventListener('click', eliminarProducto);
 btnVaciarCarrito.addEventListener('click', vaciarCarrito);
 
@@ -23,6 +33,7 @@ function vaciarCarrito(e) {
 	actualizarCarritoHTML();
 	// Actualizar el storage del carrito
 	actualizarStorage();
+	document.querySelector('#img-carrito').hidden = true;
 }
 
 function eliminarProducto(e) {
@@ -40,6 +51,9 @@ function eliminarProducto(e) {
 		actualizarCarritoHTML();
 		// Actualizar el storage del carrito
 		actualizarStorage();
+		if (carrito.length === 0) {
+			document.querySelector('#img-carrito').hidden = true;
+		}
 	}
 }
 
@@ -87,6 +101,10 @@ function agregarProducto(e) {
 }
 
 function actualizarCarritoHTML() {
+
+	if (carrito.length > 0) {
+		document.querySelector('#img-carrito').hidden = false;
+	}
 	tableCarrito.innerHTML = '';
 
 	carrito.forEach(producto => {
@@ -120,62 +138,24 @@ function actualizarStorage() {
 }
 
 /* carga/genera dinamicamente Cards */
-function productList(productos) {
+function productList(listadoProductos) {
 
-	productos.forEach(product => {
-		const col = document.createElement('div');
-		col.className = "col";
-		listaProductos.appendChild(col);
+	listaProductos.innerHTML = ''
 
-		const card = document.createElement('div');
-		card.className = "card";
-		col.appendChild(card);
+	listadoProductos.forEach(producto => {
+		const html = `
+			<div class="card">
+				<img src="${producto.imagen}" class="imagen-producto u-full-width">
 
-		const cardImg = document.createElement('img');
-		cardImg.className = "card-img-top";
-		cardImg.src = product.imagen;
-		card.appendChild(cardImg);
-
-		const cardBody = document.createElement('div');
-		cardBody.className = "card-body";
-		card.appendChild(cardBody);
-
-		const cardH5 = document.createElement('h5');
-		cardH5.className = "card-title";
-		cardH5.innerHTML = product.nombre;
-		cardBody.appendChild(cardH5);
-
-		const cardP = document.createElement('p');
-		cardP.className = "card-title";
-		cardP.innerText = Currency.formatARS(product.precio);
-		cardBody.appendChild(cardP);
-
-		const cardButton = document.createElement('button');
-		cardButton.className = "btn btn-primary";
-		cardButton.innerText = "Agregar al carrito";
-		cardButton.setAttribute('data-bs-toggle', "modal");
-		cardButton.setAttribute('data-bs-target', "#exampleModal");
-		card.appendChild(cardButton);
-
-		const modal = `
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Felicitaciones!</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								Has agregado el producto al carrito
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
-							</div>
-						</div>
-					</div>
+				<div class="info-card">
+					<h4>${producto.nombre}</h4>
+					<p class="precio"><span class="u-pull-right">${Currency.formatARS(producto.precio)}</span></p>
+					<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${producto.id}">Agregar al Carrito</a>
 				</div>
-		`;
+			</div>
+		`
 
-		listaProductos.innerHTML += modal;
-	})
+		listaProductos.innerHTML += html;
+	});
+
 }
