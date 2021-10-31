@@ -23,22 +23,34 @@
     <div class="container py-3">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
             <div class="container-fluid">
                 <!-- <a class="navbar-brand" href="#">Navbar scroll</a> -->
-                <a href="index.html"> <img src="img/logo.png" alt="logo"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="container d-flex justify-content-start">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a href="index.html"> <img id="img-logo" class="rounded mx-auto d-block" src="img/logo.png"
+                            alt="logo"></a>
+                    <!-- <h2>Buscar un producto</h2> -->
+                    <form id="formulario">
+                        <div class="form__input__button">
+                            <input type="text" class="u-full-width" id="buscador"
+                                placeholder="Ingresa lo que quieres buscar" name="search">
+                            <!-- <input class="submit-buscador" type="submit"><i
+                                        class="fa fa-search"></i></input> -->
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link" href="#">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Sobre nosotros</a>
-                        </li>
-                        <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Link
@@ -51,41 +63,46 @@
                                 </li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
-                            <a class="nav-link disabled">Contacto</a>
+                            <a class="nav-link" href="#">Contacto</a> <!-- tenia class="nav-link disabled" -->
                         </li>
-                     
-                      
+                        <!-- <li class="nav-item">
+                            <span class="span-search">
+                                <i class="fas fa-search fa-2x"></i>
+                            </span>
+                        </li> -->
                     </ul>
                     <!-- <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form> -->
-                <div class="d-flex">
-                    <div class="submenu">
-                        <img src="img/cart.png" id="img-carrito">
-                        <div id="carrito">
-                            <table id="lista-carrito" class="u-full-width">
-                                <thead>
-                                    <tr>
-                                        <th>Imagen</th>
-                                        <th>Nombre</th>
-                                        <th>Precio</th>
-                                        <th>Cantidad</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                    <button class="btn btn-outline-success" type="submit">Search</button> -->
 
-                            <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
+
+
+                    <div class="d-flex">
+                        <div class="submenu">
+                            <img src="img/cart.png" id="img-carrito">
+                            <div id="carrito">
+                                <table id="lista-carrito" class="u-full-width">
+                                    <thead>
+                                        <tr>
+                                            <th>Imagen</th>
+                                            <th>Nombre</th>
+                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                                <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                </div>
-            
+                    </div> <!-- d-flex -->
+                </div> <!-- /.collapse -->
+
             </div>
         </nav>
 

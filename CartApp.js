@@ -1,5 +1,6 @@
 const listaProductos = document.querySelector('#lista-productos');
 const tableCarrito = document.querySelector('#lista-carrito tbody');
+const formBuscador = document.querySelector('#formulario');
 const btnVaciarCarrito = document.querySelector('#vaciar-carrito');
 
 let carrito;
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 listaProductos.addEventListener('click', agregarProducto);
+formBuscador.addEventListener('submit', buscarProductos);
 tableCarrito.addEventListener('click', eliminarProducto);
 btnVaciarCarrito.addEventListener('click', vaciarCarrito);
 
@@ -56,7 +58,19 @@ function eliminarProducto(e) {
 		}
 	}
 }
+function buscarProductos(e) {
+	e.preventDefault();
 
+	// Leer el texto del input
+	const inputBuscador = document.querySelector('#buscador').value;
+	const inputFiltrado = inputBuscador.toLowerCase().trim();
+
+	const resultado = productos.filter(producto => producto.nombre.toLowerCase().includes(inputFiltrado));
+
+	console.log(resultado);
+	productList(resultado);
+	formBuscador.reset();
+}
 function agregarProducto(e) {
 	e.preventDefault();
 
