@@ -3,18 +3,21 @@ const tableCarrito = document.querySelector('#lista-carrito tbody');
 const formBuscador = document.querySelector('#formulario');
 const btnVaciarCarrito = document.querySelector('#vaciar-carrito');
 
+let badgeCount = $('#badge-count');
+
 let carrito;
 
-document.addEventListener("DOMContentLoaded", () => {
-
+$(document).ready(function () {
 	const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
 
 	carrito = carritoStorage || [];
 
 	if (carrito.length === 0) {
-		document.querySelector('#img-carrito').hidden = true;
+		$('.img-carrito').hide();
+		$('#badge-count').hide();
 	} else {
-		document.querySelector('#img-carrito').hidden = false;
+		$('.img-carrito').show();
+		$('#badge-count').show();
 	}
 	actualizarCarritoHTML();
 
@@ -35,7 +38,8 @@ function vaciarCarrito(e) {
 	actualizarCarritoHTML();
 	// Actualizar el storage del carrito
 	actualizarStorage();
-	document.querySelector('#img-carrito').hidden = true;
+	$('.img-carrito').hide();
+	$('#badge-count').hide();
 }
 
 function eliminarProducto(e) {
@@ -54,7 +58,8 @@ function eliminarProducto(e) {
 		// Actualizar el storage del carrito
 		actualizarStorage();
 		if (carrito.length === 0) {
-			document.querySelector('#img-carrito').hidden = true;
+			$('.img-carrito').hide();
+			$('#badge-count').hide();
 		}
 	}
 }
@@ -73,6 +78,10 @@ function buscarProductos(e) {
 }
 function agregarProducto(e) {
 	e.preventDefault();
+
+	// if($('#carrito').is(":hidden")){
+	// 	$('#carrito').show();
+	// }
 
 	if (e.target.classList.contains("agregar-carrito")) {
 		const productCard = e.target.parentElement.parentElement;
@@ -117,9 +126,18 @@ function agregarProducto(e) {
 function actualizarCarritoHTML() {
 
 	if (carrito.length > 0) {
-		document.querySelector('#img-carrito').hidden = false;
+		$('.img-carrito').show();
+		$('#badge-count').show();
 	}
 	tableCarrito.innerHTML = '';
+
+	//count badge
+	const { cant } = carrito.reduce((acumulador, producto) => {
+		acumulador.cant += producto.cantidad;
+		return acumulador;
+	}, { cant: 0 });
+
+	badgeCount.text(cant);
 
 	carrito.forEach(producto => {
 		const { imagen, nombre, precio, cantidad, id } = producto;
