@@ -1,6 +1,6 @@
 const listaProductos = document.querySelector('#lista-productos');
 const tableCarrito = document.querySelector('#lista-carrito tbody');
-const formBuscador = document.querySelector('#formulario');
+const formBuscador = $('#formulario');
 const btnVaciarCarrito = $('#vaciar-carrito');
 
 let badgeCount = $('#badge-count');
@@ -25,7 +25,7 @@ $(document).ready(function () {
 });
 
 listaProductos.addEventListener('click', agregarProducto);
-formBuscador.addEventListener('submit', buscarProductos);
+formBuscador.submit(buscarProductos);
 tableCarrito.addEventListener('click', eliminarProducto);
 btnVaciarCarrito.click(vaciarCarrito);
 
@@ -67,14 +67,14 @@ function buscarProductos(e) {
 	e.preventDefault();
 
 	// Leer el texto del input
-	const inputBuscador = document.querySelector('#buscador').value;
+	const inputBuscador = $('#buscador').val();
 	const inputFiltrado = inputBuscador.toLowerCase().trim();
 
 	const resultado = productos.filter(producto => producto.nombre.toLowerCase().includes(inputFiltrado));
 
 	console.log(resultado);
 	productList(resultado);
-	formBuscador.reset();
+	formBuscador.trigger("reset");
 }
 function agregarProducto(e) {
 	e.preventDefault();
