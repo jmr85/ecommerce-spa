@@ -87,7 +87,7 @@ function agregarProducto(e) {
 		const productCard = e.target.parentElement.parentElement;
 
 		const productoAgregado = {
-			imagen: productCard.querySelector('img.imagen-producto').src,
+			imagen: $('img.imagen-producto').attr('src'),
 			nombre: productCard.querySelector('h4').textContent,
 			precio: productCard.querySelector('.precio span').textContent,
 			cantidad: 1,
