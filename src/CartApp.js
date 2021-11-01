@@ -1,5 +1,5 @@
 const listaProductos = $('#lista-productos');
-const tableCarrito = document.querySelector('#lista-carrito tbody');
+const tableCarrito = $('#lista-carrito tbody');
 const formBuscador = $('#formulario');
 const btnVaciarCarrito = $('#vaciar-carrito');
 
@@ -26,7 +26,7 @@ $(document).ready(function () {
 
 listaProductos.click(agregarProducto);
 formBuscador.submit(buscarProductos);
-tableCarrito.addEventListener('click', eliminarProducto);
+tableCarrito.click(eliminarProducto);
 btnVaciarCarrito.click(vaciarCarrito);
 
 function vaciarCarrito(e) {
@@ -129,7 +129,7 @@ function actualizarCarritoHTML() {
 		$('.img-carrito').show();
 		$('#badge-count').show();
 	}
-	tableCarrito.innerHTML = '';
+	tableCarrito.html('');
 
 	//count badge
 	const { cant } = carrito.reduce((acumulador, producto) => {
@@ -142,7 +142,7 @@ function actualizarCarritoHTML() {
 	carrito.forEach(producto => {
 		const { imagen, nombre, precio, cantidad, id } = producto;
 
-		tableCarrito.innerHTML += `
+		tableCarrito.append( `
 				<tr>
 					<td>
 						<img src="${imagen}" width="100%">
@@ -160,7 +160,7 @@ function actualizarCarritoHTML() {
 						<a href="#" class="borrar-producto" data-id="${id}"><i class="fas fa-trash"></i></a>
 					</td>
 				</tr>
-			`;
+			`);
 	});
 }
 
