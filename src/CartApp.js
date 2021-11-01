@@ -1,7 +1,7 @@
 const listaProductos = document.querySelector('#lista-productos');
 const tableCarrito = document.querySelector('#lista-carrito tbody');
 const formBuscador = document.querySelector('#formulario');
-const btnVaciarCarrito = document.querySelector('#vaciar-carrito');
+const btnVaciarCarrito = $('#vaciar-carrito');
 
 let badgeCount = $('#badge-count');
 
@@ -27,7 +27,7 @@ $(document).ready(function () {
 listaProductos.addEventListener('click', agregarProducto);
 formBuscador.addEventListener('submit', buscarProductos);
 tableCarrito.addEventListener('click', eliminarProducto);
-btnVaciarCarrito.addEventListener('click', vaciarCarrito);
+btnVaciarCarrito.click(vaciarCarrito);
 
 function vaciarCarrito(e) {
 	e.preventDefault();
