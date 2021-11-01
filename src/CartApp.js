@@ -1,4 +1,4 @@
-const listaProductos = document.querySelector('#lista-productos');
+const listaProductos = $('#lista-productos');
 const tableCarrito = document.querySelector('#lista-carrito tbody');
 const formBuscador = $('#formulario');
 const btnVaciarCarrito = $('#vaciar-carrito');
@@ -24,7 +24,7 @@ $(document).ready(function () {
 	productList(productos);
 });
 
-listaProductos.addEventListener('click', agregarProducto);
+listaProductos.click(agregarProducto);
 formBuscador.submit(buscarProductos);
 tableCarrito.addEventListener('click', eliminarProducto);
 btnVaciarCarrito.click(vaciarCarrito);
@@ -172,7 +172,7 @@ function actualizarStorage() {
 /* carga/genera dinamicamente Cards */
 function productList(listadoProductos) {
 
-	listaProductos.innerHTML = ''
+	listaProductos.html('');
 
 	listadoProductos.forEach(producto => {
 		const html = `
@@ -187,7 +187,7 @@ function productList(listadoProductos) {
 			</div>
 		`
 
-		listaProductos.innerHTML += html;
+		listaProductos.append(html);
 	});
 
 }
