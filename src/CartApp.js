@@ -1,7 +1,9 @@
 const listaProductos = $('#lista-productos');
 const tableCarrito = $('#lista-carrito tbody');
 const formBuscador = $('#formulario');
+const inputBuscador = $('#buscador');
 const btnVaciarCarrito = $('#vaciar-carrito');
+const navLinkAbout = $(".nav-link:contains('About')");
 
 let badgeCount = $('#badge-count');
 
@@ -20,11 +22,28 @@ $(document).ready(function () {
 		$('#badge-count').show();
 	}
 	actualizarCarritoHTML();
-
 	productList(productos);
 });
 
 listaProductos.click(agregarProducto);
+
+inputBuscador.click(function () {
+	$(this).css('border-color', '#426be4').delay(100);
+	$(this).animate({
+		width: '40rem',
+	}, 'slow');
+});
+
+navLinkAbout.click(function () {
+	console.log('click about');
+	Swal.fire({
+		title: 'About',
+		html: 'Desarrollado por <b>Juan MartinRuiz</b>',
+		confirmButtonColor: '#426be4',
+		footer: 'Ciudad de Buenos Aires - Argentina'
+	})
+});
+
 formBuscador.submit(buscarProductos);
 tableCarrito.click(eliminarProducto);
 btnVaciarCarrito.click(vaciarCarrito);
@@ -142,7 +161,7 @@ function actualizarCarritoHTML() {
 	carrito.forEach(producto => {
 		const { imagen, nombre, precio, cantidad, id } = producto;
 
-		tableCarrito.append( `
+		tableCarrito.append(`
 				<tr>
 					<td>
 						<img src="${imagen}" width="100%">
@@ -161,6 +180,11 @@ function actualizarCarritoHTML() {
 					</td>
 				</tr>
 			`);
+	});
+	
+	$('.submenu').mouseover(function () {
+		console.log('mouseover');
+		$('#carrito').show(3000);
 	});
 }
 
