@@ -82,7 +82,7 @@ const TiendaComponent = {
 				<img src="${item.image}" class="imagen-producto u-full-width">
 					<div class="info-card">
 						<h4>${item.title}</h4>
-						<p class="precio"><span class="u-pull-right">${item.price}</span></p>
+						<p class="precio"><span class="u-pull-right">${Currency.formatARS(item.price)}</span></p>
 						<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${item.id}">Agregar al Carrito</a>
 					</div>
 				</div>
@@ -179,7 +179,7 @@ function productListFilter(productoResult) {
 
 			<div class="info-card">
 				<h4>${item.title}</h4>
-				<p class="precio"><span class="u-pull-right">${item.price}</span></p>
+				<p class="precio"><span class="u-pull-right">${Currency.formatARS(item.price)}</span></p>
 				<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${item.id}">Agregar al Carrito</a>
 				</div>
 		</div>
