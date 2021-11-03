@@ -1,4 +1,4 @@
-let productos;
+let productos = getAllProducts();
 let html;
 // const app = document.querySelector("#app");
 window.addEventListener('hashchange', router);
@@ -30,26 +30,6 @@ const NosotrosComponent = {
 		`
 	}
 }
-
-axios.get('https://fakestoreapi.com/products', {
-	responseType: 'json'
-})
-	.then(function (res) {
-		if (res.status === 200) {
-			// mensaje.innerHTML = res.data;
-			// querySelector('#wait').remove();
-			productos = res.data;
-		}
-		console.log(res);
-	})
-	.catch(function (err) {
-		//   mensaje.innerText = 'Error de conexión ' + err;
-		console.log('Error de conexión ' + err);
-	})
-	.then(function () {
-		//   document.querySelector('#app').appendChild(wait);
-		// html += wait;
-	});
 
 const TiendaComponent = {
 	render() {
