@@ -1,4 +1,5 @@
-const listaProductos = $('#lista-productos');
+// const listaProductos = $('#lista-productos');
+const app = document.querySelector("#app");
 const tableCarrito = $('#lista-carrito tbody');
 const formBuscador = $('#formulario');
 const inputBuscador = $('#buscador');
@@ -9,7 +10,7 @@ let badgeCount = $('#badge-count');
 
 let carrito;
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
 	const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
 
 	carrito = carritoStorage || [];
@@ -22,10 +23,10 @@ $(document).ready(function () {
 		$('#badge-count').show();
 	}
 	actualizarCarritoHTML();
-	productList(productos);
 });
 
-listaProductos.click(agregarProducto);
+// listaProductos.click(agregarProducto);
+app.addEventListener('click', agregarProducto);
 
 inputBuscador.click(function () {
 	$(this).css('border-color', '#426be4').delay(100);
@@ -84,14 +85,18 @@ function eliminarProducto(e) {
 }
 function buscarProductos(e) {
 	e.preventDefault();
-
+	// $(a[href = '#/tienda']).click();
+	// $('#linkTienda.nav-link').click();//*[@id="navbarScroll"]/ul/li[3]/a
+	$('#linkTienda.nav-link').trigger('click');
 	// Leer el texto del input
 	const inputBuscador = $('#buscador').val();
 	const inputFiltrado = inputBuscador.toLowerCase().trim();
+	console.log("inputFiltrado: " + inputFiltrado, typeof inputFiltrado);
 
-	const resultado = productos.filter(producto => producto.nombre.toLowerCase().includes(inputFiltrado));
+	const resultado = productos.filter(producto => producto.title.toLowerCase().includes(inputFiltrado));
 
 	console.log(resultado);
+
 	productList(resultado);
 	formBuscador.trigger("reset");
 }
@@ -106,7 +111,8 @@ function agregarProducto(e) {
 		const productCard = e.target.parentElement.parentElement;
 
 		const productoAgregado = {
-			imagen: $('img.imagen-producto').attr('src'),
+			// imagen: $('img.imagen-producto').attr('src'),
+			imagen: productCard.querySelector('img.imagen-producto').src,
 			nombre: productCard.querySelector('h4').textContent,
 			precio: productCard.querySelector('.precio span').textContent,
 			cantidad: 1,
@@ -181,7 +187,7 @@ function actualizarCarritoHTML() {
 				</tr>
 			`);
 	});
-	
+
 	$('.submenu').mouseover(function () {
 		console.log('mouseover');
 		$('#carrito').show(3000);
@@ -191,27 +197,4 @@ function actualizarCarritoHTML() {
 function actualizarStorage() {
 	// TODO
 	localStorage.setItem('carrito', JSON.stringify(carrito));
-}
-
-/* carga/genera dinamicamente Cards */
-function productList(listadoProductos) {
-
-	listaProductos.html('');
-
-	listadoProductos.forEach(producto => {
-		const html = `
-			<div class="card">
-				<img src="${producto.imagen}" class="imagen-producto u-full-width">
-
-				<div class="info-card">
-					<h4>${producto.nombre}</h4>
-					<p class="precio"><span class="u-pull-right">${Currency.formatARS(producto.precio)}</span></p>
-					<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${producto.id}">Agregar al Carrito</a>
-				</div>
-			</div>
-		`
-
-		listaProductos.append(html);
-	});
-
 }

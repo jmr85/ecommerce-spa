@@ -32,7 +32,7 @@
                         aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a href="index.html"> <img id="img-logo" class="rounded mx-auto d-block" src="img/logo.png"
+                    <a class="nav-link" href="/"> <img id="img-logo" class="rounded mx-auto d-block" src="img/logo.png"
                             alt="logo"></a>
                     <!-- <h2>Buscar un producto</h2> -->
                     <form id="formulario">
@@ -46,32 +46,12 @@
                     </form>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <!-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Link
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contacto</a> <!-- tenia class="nav-link disabled" -->
-                        </li>
-                        <!-- <li class="nav-item">
-                            <span class="span-search">
-                                <i class="fas fa-search fa-2x"></i>
-                            </span>
-                        </li> -->
+                    <ul class="nav-items navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                        style="--bs-scroll-height: 100px;">
+                        <li><a class="nav-link" href="/">Inicio</a></li>
+                        <li><a class="nav-link" href="#/nosotros">Nosotros</a></li>
+                        <li><a id="linkTienda" class="nav-link" href="#/tienda">Tienda</a></li>
+                        <li><a class="nav-link" href="#/contacto">Contacto</a></li>
                     </ul>
                     <!-- <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -118,9 +98,14 @@
         <!-- </div> -->
         <br>
         <br>
-        <div id="lista-productos" class="row row-cols-1 row-cols-md-3 g-4">
-            <!-- aca se carga/genera dinamicamente los Cards -->
+
+        <div id="app" class="row row-cols-1 row-cols-md-3 g-4">
+
         </div>
+
+        <!-- <div id="lista-productos" class="row row-cols-1 row-cols-md-3 g-4"> -->
+        <!-- aca se carga/genera dinamicamente los Cards -->
+        <!-- </div> -->
 
 
         <div class="container">
@@ -144,7 +129,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./src/helper/Calculo.js"></script>
     <script src="./src/helper/Currency.js"></script>
-    <script src="./mock-api/productos.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./src/spa.js"></script>
     <script src="./src/CartApp.js"></script>
 </body>
 
