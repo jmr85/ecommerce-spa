@@ -1,6 +1,6 @@
 let productos = getAllProducts();
 let html;
-// const app = document.querySelector("#app");
+
 window.addEventListener('hashchange', router);
 document.querySelector('.nav-items li a:first-child').addEventListener('click', e => {
 	e.preventDefault();
@@ -34,7 +34,6 @@ const NosotrosComponent = {
 const TiendaComponent = {
 	render() {
 		html = '';
-		// app.innerHTML = '';
 
 		productos.forEach(item => {
 			html += `
@@ -76,7 +75,6 @@ const ErrorComponent = {
 	}
 }
 
-//TODO: agregar { path: '/tienda', component: TiendaComponent },
 const routes = [
 	{ path: '/', component: HomeComponent },
 	{ path: '/nosotros', component: NosotrosComponent },
@@ -106,9 +104,7 @@ function router() {
 }
 
 /* carga/genera dinamicamente Cards */
-function productList(productoResult) {
-	// const { image, title, category, price, id } = producto;
-	// app.html('');
+function productListFilter(productoResult) {
 	let html;
 	app.innerHTML = '';
 
@@ -126,8 +122,6 @@ function productList(productoResult) {
 		`
 
 		app.innerHTML += html;
-
-		// app.append(html);
 	});
 
 	return html;

@@ -1,4 +1,3 @@
-// const listaProductos = $('#lista-productos');
 const app = document.querySelector("#app");
 const tableCarrito = $('#lista-carrito tbody');
 const formBuscador = $('#formulario');
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	actualizarCarritoHTML();
 });
 
-// listaProductos.click(agregarProducto);
 app.addEventListener('click', agregarProducto);
 
 inputBuscador.click(function () {
@@ -85,9 +83,7 @@ function eliminarProducto(e) {
 }
 function buscarProductos(e) {
 	e.preventDefault();
-	// $(a[href = '#/tienda']).click();
-	// $('#linkTienda.nav-link').click();//*[@id="navbarScroll"]/ul/li[3]/a
-	$('#linkTienda.nav-link').trigger('click');
+	
 	// Leer el texto del input
 	const inputBuscador = $('#buscador').val();
 	const inputFiltrado = inputBuscador.toLowerCase().trim();
@@ -97,7 +93,7 @@ function buscarProductos(e) {
 
 	console.log(resultado);
 
-	productList(resultado);
+	productListFilter(resultado);
 	formBuscador.trigger("reset");
 }
 function agregarProducto(e) {
