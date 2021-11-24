@@ -3,6 +3,7 @@ const tableCarrito = $('#lista-carrito tbody');
 const formBuscador = $('#formulario');
 const inputBuscador = $('#buscador');
 const btnVaciarCarrito = $('#vaciar-carrito');
+const btnFinalizarCompra = $('#finalizar-compra');
 const navLinkAbout = $(".nav-link:contains('About')");
 
 let badgeCount = $('#badge-count');
@@ -33,7 +34,7 @@ inputBuscador.click(function () {
 	}, 'slow');
 });
 
-navLinkAbout.click(function () {
+/* navLinkAbout.click(function () {
 	console.log('click about');
 	Swal.fire({
 		title: 'About',
@@ -41,11 +42,28 @@ navLinkAbout.click(function () {
 		confirmButtonColor: '#426be4',
 		footer: 'Ciudad de Buenos Aires - Argentina'
 	})
-});
+}); */
 
 formBuscador.submit(buscarProductos);
 tableCarrito.click(eliminarProducto);
 btnVaciarCarrito.click(vaciarCarrito);
+btnFinalizarCompra.click(finalizarCompra);
+
+function finalizarCompra(e) {
+	e.preventDefault();
+	// Swal.fire({
+	// 	title: 'A finalizado su compra',
+	// 	showClass: {
+	// 		popup: 'animate__animated animate__fadeInDown'
+	// 	},
+	// 	hideClass: {
+	// 		popup: 'animate__animated animate__fadeOutUp'
+	// 	},
+	// 	confirmButtonColor: '#426be4',
+	// })
+	window.location.replace('#/checkout');
+
+}
 
 function vaciarCarrito(e) {
 	e.preventDefault();
@@ -83,7 +101,7 @@ function eliminarProducto(e) {
 }
 function buscarProductos(e) {
 	e.preventDefault();
-	
+
 	// Leer el texto del input
 	const inputBuscador = $('#buscador').val();
 	const inputFiltrado = inputBuscador.toLowerCase().trim();
@@ -104,6 +122,18 @@ function agregarProducto(e) {
 	// }
 
 	if (e.target.classList.contains("agregar-carrito")) {
+
+		Swal.fire({
+			title: 'Agregaste a tu carrito',
+			showClass: {
+				popup: 'animate__animated animate__fadeInDown'
+			},
+			hideClass: {
+				popup: 'animate__animated animate__fadeOutUp'
+			},
+			confirmButtonColor: '#426be4',
+		})
+
 		const productCard = e.target.parentElement.parentElement;
 
 		const productoAgregado = {

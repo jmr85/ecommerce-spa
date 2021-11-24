@@ -9,6 +9,94 @@ document.querySelector('.nav-items li a:first-child').addEventListener('click', 
 })
 document.addEventListener('DOMContentLoaded', router);
 
+
+const CheckoutComponent = {
+	render() {
+		return `
+			<div class="container animate__animated animate__fadeInDown">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>Checkout</h1>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="nombre">Nombre</label>
+									<input type="text" class="form-control" id="nombre" placeholder="Nombre">
+								</div>
+								<div class="form-group">
+									<label for="apellido">Apellido</label>
+									<input type="text" class="form-control" id="apellido" placeholder="Apellido">	
+								</div>
+								<div class="form-group">
+									<label for="email">Email</label>
+									<input type="email" class="form-control" id="email" placeholder="Email">
+								</div>
+								<div class="form-group">
+									<label for="direccion">Dirección</label>
+									<input type="text" class="form-control" id="direccion" placeholder="Dirección">
+								</div>
+								<div class="form-group">
+									<label for="telefono">Teléfono</label>
+									<input type="text" class="form-control" id="telefono" placeholder="Teléfono">
+								</div>
+								<div class="form-group">
+									<label for="ciudad">Ciudad</label>
+									<input type="text" class="form-control" id="ciudad" placeholder="Ciudad">
+								</div>
+								<div class="form-group">
+									<label for="pais">País</label>
+									<input type="text" class="form-control" id="pais" placeholder="País">
+								</div>
+								<div class="form-group">
+									<label for="codigo-postal">Código Postal</label>
+									<input type="text" class="form-control" id="codigo-postal" placeholder="Código Postal">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="nombre-tarjeta">Nombre en la tarjeta</label>
+									<input type="text" class="form-control" id="nombre-tarjeta" placeholder="Nombre en la tarjeta">
+								</div>
+								<div class="form-group">
+									<label for="numero-tarjeta">Número de tarjeta</label>
+									<input type="text" class="form-control" id="numero-tarjeta" placeholder="Número de tarjeta">
+								</div>
+								<div class="form-group">
+									<label for="fecha-vencimiento">Fecha de vencimiento</label>
+									<input type="text" class="form-control" id="fecha-vencimiento" placeholder="Fecha de vencimiento">
+								</div>
+								<div class="form-group">
+									<label for="codigo-seguridad">Código de seguridad</label>
+									<input type="text" class="form-control" id="codigo-seguridad" placeholder="Código de seguridad">
+								</div>
+								<div class="form-group">
+									<label for="numero-tarjeta">Número de tarjeta</label>
+									<input type="text" class="form-control" id="numero-tarjeta" placeholder="Número de tarjeta">
+								</div>
+								<div class="form-group">
+									<label for="fecha-vencimiento">Fecha de vencimiento</label>
+									<input type="text" class="form-control" id="fecha-vencimiento" placeholder="Fecha de vencimiento">
+								</div>
+								<div class="form-group">
+									<label for="codigo-seguridad">Código de seguridad</label>
+									<input type="text" class="form-control" id="codigo-seguridad" placeholder="Código de seguridad">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-primary">Pagar</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+`}
+}
+
 const HomeComponent = {
 	render() {
 		return `
@@ -99,32 +187,107 @@ const ContactoComponent = {
 			
 			<div class="container-fluid">
 				<h1>Contacto</h1>
-				<form action="https://formspree.io/f/xoqyblrz" method="POST">  
-					<fieldset>
-						<!-- <label for="name">Name</label>
-						<br> -->
-						<input type="text" name="name" id="name" placeholder="Enter your name" required>
-						<!-- <br> br como provisorio -->
-						<!-- <label for="name">Email</label> -->
-						<!-- <br> -->
-						<input type="email" name="email" placeholder="Enter your email" required>
-						<!-- <br> -->
-						<!-- <label for="subject">Subject</label> -->
+				<form id="form-contacto" needs-validation>  
+						<label for="nombre">Name</label>
 						<br>
-						<input type="text" name="subject" id="apellido" placeholder="Enter a subject" required>
-						<!-- <br> -->
-						<!-- <label for="cosulta">Question</label> -->
-						<!-- <br> -->
+						<input type="text" name="nombre" id="nombre" placeholder="Enter your name" required>
+						<br> 
+						<div class="invalid-feedback">
+							Please choose a username.
+					  	</div>
+						<label for="email">Email</label>
+						<br>
+						<input type="email" name="email" id="email" placeholder="Enter your email" required>
+						 <br>
+						<label for="subject">Subject</label>
+						<br>
+						<input type="text" name="subject" id="subject" placeholder="Enter a subject" required>
+						<br>
+						<label for="question">Question</label>
+						<br>
 						<textarea name="question" id="question" cols="30" rows="5" maxlength="500"
-							placeholder="Write your question" required></textarea>
+							placeholder="Write your question"></textarea>
 
-						<input class="btn-submit default" type="submit" value="Submit">
-						<!-- <input type="reset" value="Clear"> -->
-					</fieldset>
+						<button class="btn-submit default" onclick="submitForm(event)" type="submit">Submit</button>			
             	</form>
 			</div>
 		`
 	}
+}
+const validar = () => {
+	/* mail */
+	let mail = document.getElementById("email").value
+	let mail_format = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+	/*nombre */
+	let nombre = document.getElementById("nombre").value
+	/*subject */
+	let subject = document.getElementById("subject").value
+	/*question*/
+	let question = document.getElementById("question").value
+
+	if (mail !== "" && mail.match(mail_format) && nombre.length > 5 && subject.length > 5 && question.length > 10) {
+		return true;
+	} else {
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			html:
+				`
+						${nombre.length > 5 ? `
+						<div class="alert alert-success" role="alert">
+							Nombre es valido
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Nombre minimo 6 caracteres
+						</div>
+						`}
+						${mail !== "" && mail.match(mail_format) ? `
+						<div class="alert alert-success" role="alert">
+							Email is valido
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Email vacio ó no es valido
+						</div>
+						`}
+						
+						${subject.length > 5 ? `
+						<div class="alert alert-success" role="alert">
+							Asunto es valido
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Asunto minimo 6 caracteres
+						</div>
+						`}
+						
+						${question.length > 10 ? `
+						<div class="alert alert-success" role="alert">
+							Pregunta es valida
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Pregunta minimo 11 caracteres
+						</div>
+						`}				
+			`,
+			confirmButtonColor: '#426be4'
+		})
+		return false;
+	}
+
+}
+const submitForm = (event) => {
+	event.preventDefault();
+	if (validar()) {
+		let form = document.getElementById('form-contacto');
+		form.action = 'https://formspree.io/f/xoqyblrz';
+		form.method = 'POST';
+		form.submit();
+		console.log('submit');
+	}
+
 }
 
 const ErrorComponent = {
@@ -143,7 +306,8 @@ const routes = [
 	{ path: '/', component: HomeComponent },
 	{ path: '/nosotros', component: NosotrosComponent },
 	{ path: '/tienda', component: TiendaComponent },
-	{ path: '/contacto', component: ContactoComponent }
+	{ path: '/contacto', component: ContactoComponent },
+	{ path: '/checkout', component: CheckoutComponent }
 ]
 
 function parseLocation() {
