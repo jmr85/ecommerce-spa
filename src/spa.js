@@ -19,38 +19,21 @@ const CheckoutComponent = {
 						<h1>Checkout</h1>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="form-group">
-									<label for="nombre">Nombre</label>
-									<input type="text" class="form-control" id="nombre" placeholder="Nombre">
-								</div>
-								<div class="form-group">
-									<label for="apellido">Apellido</label>
-									<input type="text" class="form-control" id="apellido" placeholder="Apellido">	
-								</div>
-								<div class="form-group">
-									<label for="email">Email</label>
-									<input type="email" class="form-control" id="email" placeholder="Email">
-								</div>
-								<div class="form-group">
-									<label for="direccion">Dirección</label>
-									<input type="text" class="form-control" id="direccion" placeholder="Dirección">
-								</div>
-								<div class="form-group">
-									<label for="telefono">Teléfono</label>
-									<input type="text" class="form-control" id="telefono" placeholder="Teléfono">
-								</div>
-								<div class="form-group">
-									<label for="ciudad">Ciudad</label>
-									<input type="text" class="form-control" id="ciudad" placeholder="Ciudad">
-								</div>
-								<div class="form-group">
-									<label for="pais">País</label>
-									<input type="text" class="form-control" id="pais" placeholder="País">
-								</div>
-								<div class="form-group">
-									<label for="codigo-postal">Código Postal</label>
-									<input type="text" class="form-control" id="codigo-postal" placeholder="Código Postal">
-								</div>
+								/*tabla de productos de carrito*/
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Producto</th>
+											<th scope="col">Precio</th>
+											<th scope="col">Cantidad</th>
+											<th scope="col">Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										${forCartCheckOut()}
+									</tbody>
+								</table>								
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
@@ -95,6 +78,24 @@ const CheckoutComponent = {
 	</div>
 </div>
 `}
+}
+
+/* Esta funcion se utiliza dentro de <table> de CheckoutComponent, imprime la variable carrito de CartApp */
+const forCartCheckOut = () => {
+		let htmlChekOut = '';
+
+		carrito.forEach(item => {
+			htmlChekOut += `
+				<tr>
+					<th scope="row">${item.id}</th>
+					<td>${item.nombre}</td>
+					<td>${item.precio}</td>
+					<td>${item.cantidad}</td>
+				</tr>
+			`
+		});
+
+		return htmlChekOut;
 }
 
 const HomeComponent = {
