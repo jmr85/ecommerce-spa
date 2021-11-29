@@ -19,7 +19,6 @@ const CheckoutComponent = {
 						<h1>Checkout</h1>
 						<div class="row">
 							<div class="col-md-6">
-								/*tabla de productos de carrito*/
 								<table class="table">
 									<thead>
 										<tr>
@@ -27,6 +26,8 @@ const CheckoutComponent = {
 											<th scope="col">Producto</th>
 											<th scope="col">Precio</th>
 											<th scope="col">Cantidad</th>
+											<th scope="col">Subtotal</th>
+											<th scope="col">Iva</th>
 											<th scope="col">Total</th>
 										</tr>
 									</thead>
@@ -35,7 +36,7 @@ const CheckoutComponent = {
 									</tbody>
 								</table>								
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-6" style="margin: 1px;">
 								<div class="form-group">
 									<label for="nombre-tarjeta">Nombre en la tarjeta</label>
 									<input type="text" class="form-control" id="nombre-tarjeta" placeholder="Nombre en la tarjeta">
@@ -83,14 +84,17 @@ const CheckoutComponent = {
 /* Esta funcion se utiliza dentro de <table> de CheckoutComponent, imprime la variable carrito de CartApp */
 const forCartCheckOut = () => {
 		let htmlChekOut = '';
-
+		console.log("Carrito: ", carrito);
 		carrito.forEach(item => {
 			htmlChekOut += `
 				<tr>
 					<th scope="row">${item.id}</th>
 					<td>${item.nombre}</td>
-					<td>${item.precio}</td>
+					<td>$${item.precio}</td>
 					<td>${item.cantidad}</td>
+					<td>$${Calculo.financial(item.precio * item.cantidad)}</td>
+					<td>$${Calculo.financial(Calculo.iva(item.precio * item.cantidad))}</td>
+					<td>$${Calculo.financial(Calculo.total(item.precio * item.cantidad))}</td>
 				</tr>
 			`
 		});
@@ -171,7 +175,7 @@ const TiendaComponent = {
 				<img src="${item.image}" class="imagen-producto u-full-width">
 					<div class="info-card">
 						<h4>${item.title}</h4>
-						<p class="precio"><span class="u-pull-right">${Currency.formatARS(item.price)}</span></p>
+						<p class="precio"><span class="u-pull-right">${item.price}</span></p>
 						<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${item.id}">Agregar al Carrito</a>
 					</div>
 				</div>
