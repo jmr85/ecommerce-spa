@@ -39,31 +39,23 @@ const CheckoutComponent = {
 							<div class="col-md-6" style="margin: 1px;">
 								<div class="form-group">
 									<label for="nombre-tarjeta">Nombre en la tarjeta</label>
-									<input type="text" class="form-control" id="nombre-tarjeta" placeholder="Nombre en la tarjeta">
+									<input type="text" class="form-control" id="nombre-tarjeta" placeholder="John More Doe">
 								</div>
 								<div class="form-group">
 									<label for="numero-tarjeta">Número de tarjeta</label>
-									<input type="text" class="form-control" id="numero-tarjeta" placeholder="Número de tarjeta">
+									<input type="text" class="form-control" id="numero-tarjeta" placeholder="1111-2222-3333-4444">
 								</div>
 								<div class="form-group">
-									<label for="fecha-vencimiento">Fecha de vencimiento</label>
-									<input type="text" class="form-control" id="fecha-vencimiento" placeholder="Fecha de vencimiento">
+									<label for="fecha-vencimiento">Año vencimiento</label>
+									<input type="text" class="form-control" id="fecha-vencimiento" placeholder="2022">
 								</div>
 								<div class="form-group">
-									<label for="codigo-seguridad">Código de seguridad</label>
-									<input type="text" class="form-control" id="codigo-seguridad" placeholder="Código de seguridad">
-								</div>
-								<div class="form-group">
-									<label for="numero-tarjeta">Número de tarjeta</label>
-									<input type="text" class="form-control" id="numero-tarjeta" placeholder="Número de tarjeta">
-								</div>
-								<div class="form-group">
-									<label for="fecha-vencimiento">Fecha de vencimiento</label>
-									<input type="text" class="form-control" id="fecha-vencimiento" placeholder="Fecha de vencimiento">
+									<label for="fecha-vencimiento">Mes vencimiento</label>
+									<input type="text" class="form-control" id="fecha-vencimiento" placeholder="09">
 								</div>
 								<div class="form-group">
 									<label for="codigo-seguridad">Código de seguridad</label>
-									<input type="text" class="form-control" id="codigo-seguridad" placeholder="Código de seguridad">
+									<input type="text" class="form-control" id="codigo-seguridad" placeholder="352">
 								</div>
 							</div>
 						</div>
@@ -98,8 +90,95 @@ const forCartCheckOut = () => {
 				</tr>
 			`
 		});
-
+		htmlChekOut += `
+			<tr>
+				<th scope="row"></th>
+				<td></td>
+				<td></td>
+				<td>Subtotal:</td>
+				<td>$${Calculo.financial(Calculo.subtotalForeach(carrito))}</td>
+				<td>Total:</td>
+				<td>$${Calculo.financial(Calculo.totalForeach(carrito))}</td>
+				<td></td>
+			</tr>
+		`;
 		return htmlChekOut;
+}
+
+const validarCheckOut = () => {
+	/* mail */
+	let mail = document.getElementById("email").value
+	let mail_format = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+	/*nombre */
+	let nombre = document.getElementById("nombre").value
+	/*subject */
+	let subject = document.getElementById("subject").value
+	/*question*/
+	let question = document.getElementById("question").value
+
+	if (mail !== "" && mail.match(mail_format) && nombre.length > 5 && subject.length > 5 && question.length > 10) {
+		return true;
+	} else {
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			html:
+				`
+						${nombre.length > 5 ? `
+						<div class="alert alert-success" role="alert">
+							Nombre es valido
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Nombre minimo 6 caracteres
+						</div>
+						`}
+						${mail !== "" && mail.match(mail_format) ? `
+						<div class="alert alert-success" role="alert">
+							Email is valido
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Email vacio ó no es valido
+						</div>
+						`}
+						
+						${subject.length > 5 ? `
+						<div class="alert alert-success" role="alert">
+							Asunto es valido
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Asunto minimo 6 caracteres
+						</div>
+						`}
+						
+						${question.length > 10 ? `
+						<div class="alert alert-success" role="alert">
+							Pregunta es valida
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Pregunta minimo 11 caracteres
+						</div>
+						`}				
+			`,
+			confirmButtonColor: '#426be4'
+		})
+		return false;
+	}
+
+}
+const submitFormCheckOut = (event) => {
+	event.preventDefault();
+	if (validarCheckOut()) {
+		let form = document.getElementById('form-contacto');
+		form.action = 'https://formspree.io/f/xoqyblrz';
+		form.method = 'POST';
+		form.submit();
+		console.log('submit');
+	}
+
 }
 
 const HomeComponent = {
@@ -348,7 +427,7 @@ function productListFilter(productoResult) {
 
 			<div class="info-card">
 				<h4>${item.title}</h4>
-				<p class="precio"><span class="u-pull-right">${Currency.formatARS(item.price)}</span></p>
+				<p class="precio"><span class="u-pull-right">${item.price}</span></p>
 				<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${item.id}">Agregar al Carrito</a>
 				</div>
 		</div>
