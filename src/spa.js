@@ -47,21 +47,21 @@ const CheckoutComponent = {
 								</div>
 								<div class="form-group">
 									<label for="fecha-vencimiento">Año vencimiento</label>
-									<input type="text" class="form-control" id="fecha-vencimiento" placeholder="2022">
+									<input type="text" class="form-control" id="anio-vencimiento" placeholder="2022">
 								</div>
 								<div class="form-group">
 									<label for="fecha-vencimiento">Mes vencimiento</label>
-									<input type="text" class="form-control" id="fecha-vencimiento" placeholder="09">
+									<input type="text" class="form-control" id="mes-vencimiento" placeholder="09">
 								</div>
 								<div class="form-group">
 									<label for="codigo-seguridad">Código de seguridad</label>
-									<input type="text" class="form-control" id="codigo-seguridad" placeholder="352">
+									<input type="number" class="form-control" id="codigo-seguridad" placeholder="352">
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<button type="submit" class="btn btn-primary">Pagar</button>
+								<button type="submit" onclick="submitFormCheckOut(event)" class="btn btn-primary">Pagar</button>
 							</div>
 						</div>
 					</form>
@@ -75,10 +75,10 @@ const CheckoutComponent = {
 
 /* Esta funcion se utiliza dentro de <table> de CheckoutComponent, imprime la variable carrito de CartApp */
 const forCartCheckOut = () => {
-		let htmlChekOut = '';
-		console.log("Carrito: ", carrito);
-		carrito.forEach(item => {
-			htmlChekOut += `
+	let htmlChekOut = '';
+	console.log("Carrito: ", carrito);
+	carrito.forEach(item => {
+		htmlChekOut += `
 				<tr>
 					<th scope="row">${item.id}</th>
 					<td>${item.nombre}</td>
@@ -89,8 +89,8 @@ const forCartCheckOut = () => {
 					<td>$${Calculo.financial(Calculo.total(item.precio * item.cantidad))}</td>
 				</tr>
 			`
-		});
-		htmlChekOut += `
+	});
+	htmlChekOut += `
 			<tr>
 				<th scope="row"></th>
 				<td></td>
@@ -102,21 +102,28 @@ const forCartCheckOut = () => {
 				<td></td>
 			</tr>
 		`;
-		return htmlChekOut;
+	return htmlChekOut;
 }
 
 const validarCheckOut = () => {
-	/* mail */
-	let mail = document.getElementById("email").value
-	let mail_format = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-	/*nombre */
-	let nombre = document.getElementById("nombre").value
-	/*subject */
-	let subject = document.getElementById("subject").value
-	/*question*/
-	let question = document.getElementById("question").value
+	/* nombre tarjeta */
+	let nombreTarjeta = document.getElementById("nombre-tarjeta").value
 
-	if (mail !== "" && mail.match(mail_format) && nombre.length > 5 && subject.length > 5 && question.length > 10) {
+	/* numero tarjeta */
+	let numeroTarjeta = document.getElementById("numero-tarjeta").value
+	// let creditCardFormat = /^(?:3[47][0-9]{13})$/; 
+	/*regexp more credit card*/
+	// let creditCardFormat = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+
+
+	/* año vencimiento */
+	let anioVencimiento = document.getElementById("anio-vencimiento").value
+	/* mes vencimiento */
+	let mesVencimiento = document.getElementById("mes-vencimiento").value
+	/* codigo seguridad */
+	let codigoSeguridad = document.getElementById("codigo-seguridad").value
+
+	if (nombreTarjeta !== "" && numeroTarjeta.length > 15 && anioVencimiento !== "" && mesVencimiento !== '' && codigoSeguridad.length > 2) {
 		return true;
 	} else {
 		Swal.fire({
@@ -124,7 +131,7 @@ const validarCheckOut = () => {
 			title: 'Oops...',
 			html:
 				`
-						${nombre.length > 5 ? `
+						${nombreTarjeta.length > 5 ? `
 						<div class="alert alert-success" role="alert">
 							Nombre es valido
 						</div>
@@ -133,35 +140,45 @@ const validarCheckOut = () => {
 							Nombre minimo 6 caracteres
 						</div>
 						`}
-						${mail !== "" && mail.match(mail_format) ? `
+						${numeroTarjeta.length > 15 ? `
 						<div class="alert alert-success" role="alert">
-							Email is valido
+							Numero de tarjeta de credito es valido
 						</div>
 						` : `
 						<div class="alert alert-warning" role="alert">
-							Email vacio ó no es valido
+							Numero de tarjeta de credito vacio ó no es valido
 						</div>
 						`}
 						
-						${subject.length > 5 ? `
+						${anioVencimiento !== "" ? `
 						<div class="alert alert-success" role="alert">
-							Asunto es valido
+							Año de vencimiento es valido
 						</div>
 						` : `
 						<div class="alert alert-warning" role="alert">
-							Asunto minimo 6 caracteres
+							Año de vencimiento vacio
 						</div>
 						`}
 						
-						${question.length > 10 ? `
+						${mesVencimiento !== "" ? `
 						<div class="alert alert-success" role="alert">
-							Pregunta es valida
+							Mes de vencimiento es valido
 						</div>
 						` : `
 						<div class="alert alert-warning" role="alert">
-							Pregunta minimo 11 caracteres
+							Mes de vencimiento vacio
 						</div>
-						`}				
+						`}		
+						${codigoSeguridad.length > 2 ? `
+						<div class="alert alert-success" role="alert">
+							Codigo de seguridad es valido
+						</div>
+						` : `
+						<div class="alert alert-warning" role="alert">
+							Codigo de seguridad vacio o invalido
+						</div>
+						`}
+
 			`,
 			confirmButtonColor: '#426be4'
 		})
@@ -172,11 +189,26 @@ const validarCheckOut = () => {
 const submitFormCheckOut = (event) => {
 	event.preventDefault();
 	if (validarCheckOut()) {
-		let form = document.getElementById('form-contacto');
-		form.action = 'https://formspree.io/f/xoqyblrz';
-		form.method = 'POST';
-		form.submit();
-		console.log('submit');
+
+		localStorage.clear();
+
+		$('.img-carrito').hide();
+		$('#badge-count').hide();
+
+		Swal.fire(
+			{
+				icon: 'success',
+				title: 'Gracias por su compra',
+				showClass: {
+					popup: 'animate__animated animate__fadeInDown'
+				},
+				hideClass: {
+					popup: 'animate__animated animate__fadeOutUp'
+				},
+				confirmButtonColor: '#426be4',
+			})
+
+			window.location.replace('#/');//redirecciona a home
 	}
 
 }

@@ -34,16 +34,6 @@ inputBuscador.click(function () {
 	}, 'slow');
 });
 
-/* navLinkAbout.click(function () {
-	console.log('click about');
-	Swal.fire({
-		title: 'About',
-		html: 'Desarrollado por <b>Juan MartinRuiz</b>',
-		confirmButtonColor: '#426be4',
-		footer: 'Ciudad de Buenos Aires - Argentina'
-	})
-}); */
-
 formBuscador.submit(buscarProductos);
 tableCarrito.click(eliminarProducto);
 btnVaciarCarrito.click(vaciarCarrito);
@@ -51,18 +41,7 @@ btnFinalizarCompra.click(finalizarCompra);
 
 function finalizarCompra(e) {
 	e.preventDefault();
-	// Swal.fire({
-	// 	title: 'A finalizado su compra',
-	// 	showClass: {
-	// 		popup: 'animate__animated animate__fadeInDown'
-	// 	},
-	// 	hideClass: {
-	// 		popup: 'animate__animated animate__fadeOutUp'
-	// 	},
-	// 	confirmButtonColor: '#426be4',
-	// })
 	window.location.replace('#/checkout');
-
 }
 
 function vaciarCarrito(e) {
