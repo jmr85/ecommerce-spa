@@ -39,6 +39,7 @@ tableCarrito.click(eliminarProducto);
 btnVaciarCarrito.click(vaciarCarrito);
 btnFinalizarCompra.click(finalizarCompra);
 
+/* Carga componente Checkout */
 function finalizarCompra(e) {
 	e.preventDefault();
 	window.location.replace('#/checkout');

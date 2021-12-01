@@ -43,6 +43,14 @@ tbody img {
     flex-direction: column; 
     justify-content: end;
 }
+.card img{
+    width: 150px;
+    height: 150px;
+    align-self: center;
+}
+.card-title{
+    align-self: center;
+}
 .span-search{
     color: rgb(114, 114, 133);
     padding-left: 2rem;

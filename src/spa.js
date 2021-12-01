@@ -2,6 +2,7 @@ let productos = getAllProducts();
 let html;
 
 window.addEventListener('hashchange', router);
+/* carga componente especifico al hacer click en un item de menu de Nav */
 document.querySelector('.nav-items li a:first-child').addEventListener('click', e => {
 	e.preventDefault();
 	location.hash = "";
@@ -9,7 +10,7 @@ document.querySelector('.nav-items li a:first-child').addEventListener('click', 
 })
 document.addEventListener('DOMContentLoaded', router);
 
-
+/* Imprime productos del carrito luego de clickear en finalizar compra y tiene formulario para cargar tarjeta de credito */
 const CheckoutComponent = {
 	render() {
 		return `
@@ -73,7 +74,7 @@ const CheckoutComponent = {
 `}
 }
 
-/* Esta funcion se utiliza dentro de <table> de CheckoutComponent, imprime la variable carrito de CartApp */
+/* Esta funcion se utiliza dentro de <table> de CheckoutComponent, imprime la variable carrito de CartApp mas el Total con IVA */
 const forCartCheckOut = () => {
 	let htmlChekOut = '';
 	console.log("Carrito: ", carrito);
@@ -105,6 +106,7 @@ const forCartCheckOut = () => {
 	return htmlChekOut;
 }
 
+/* Valida los campos de la tarjeta de credito del CheckoutComponent */
 const validarCheckOut = () => {
 	/* nombre tarjeta */
 	let nombreTarjeta = document.getElementById("nombre-tarjeta").value
@@ -186,6 +188,8 @@ const validarCheckOut = () => {
 	}
 
 }
+
+/* Si la validacion de la tarjeta de credito esta OK finaliza la compra, limpia localStorage/carrito y redirige al Home */
 const submitFormCheckOut = (event) => {
 	event.preventDefault();
 	if (validarCheckOut()) {
@@ -208,31 +212,32 @@ const submitFormCheckOut = (event) => {
 				confirmButtonColor: '#426be4',
 			})
 
-			window.location.replace('#/');//redirecciona a home
+		window.location.replace('/');//redirecciona a home
 	}
 
 }
 
+/* En este componente carga el Carousel */
 const HomeComponent = {
 	render() {
 		return `
 			<div class="container-fluid">
 				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-indicators">
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					</div>
 					<div class="carousel-inner">
-					<div class="carousel-item active">
-						<img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" class="d-block w-100" alt="...">
-					</div>
-					<div class="carousel-item">
-						<img src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" class="d-block w-100" alt="...">
-					</div>
-					<div class="carousel-item">
-						<img src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg" class="d-block w-100" alt="...">
-					</div>
+						<div class="carousel-item active">
+							<img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item">
+							<img src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item">
+							<img src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg" class="d-block w-100" alt="...">
+						</div>
 					</div>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -247,6 +252,19 @@ const HomeComponent = {
 		`
 	}
 }
+/* eventos click del Carousel del HomeComponent */
+/* al hacer click en botones o imagenes carga el TiendaComponent (cards de productos) */
+document.addEventListener("DOMContentLoaded", function () {
+	let myCarousel = document.getElementById('carouselExampleIndicators')
+	let carouselImg = document.querySelector('.carousel-inner > .carousel-item.active > img')
+
+	myCarousel.addEventListener('slide.bs.carousel', function () {
+		window.location.replace('#/tienda');//redirecciona a tienda al hacer click en una imagen
+	})
+	carouselImg.addEventListener('click', function () {
+		window.location.replace('#/tienda');//redirecciona a tienda al hacer click en una imagen
+	})
+});
 
 const NosotrosComponent = {
 	render() {
@@ -276,16 +294,22 @@ const NosotrosComponent = {
 	}
 }
 
+/* Carga los Cards de productos */
 const TiendaComponent = {
 	render() {
 		html = '';
 
+		setTimeout(() => {
+
+		}, 100);
 		productos.forEach(item => {
 			html += `
 				<div class="card">
-				<img src="${item.image}" class="imagen-producto u-full-width">
+					<img src="${item.image}" class="imagen-producto u-full-width">
 					<div class="info-card">
-						<h4>${item.title}</h4>
+						<div class="card-body">
+							<h4 class="card-title">${item.title}</h4>
+						</div>
 						<p class="precio"><span class="u-pull-right">${item.price}</span></p>
 						<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${item.id}">Agregar al Carrito</a>
 					</div>
@@ -330,6 +354,7 @@ const ContactoComponent = {
 		`
 	}
 }
+/* Valida los campos de ContactoComponent */
 const validar = () => {
 	/* mail */
 	let mail = document.getElementById("email").value
@@ -394,6 +419,7 @@ const validar = () => {
 	}
 
 }
+/* Si la validacion de los campos de ContactoComponent estan OK envia los datos del formulario al mail configurado en formspree.io*/
 const submitForm = (event) => {
 	event.preventDefault();
 	if (validar()) {
@@ -403,7 +429,6 @@ const submitForm = (event) => {
 		form.submit();
 		console.log('submit');
 	}
-
 }
 
 const ErrorComponent = {
@@ -447,7 +472,8 @@ function router() {
 	app.innerHTML = component.render();
 }
 
-/* carga/genera dinamicamente Cards */
+/* carga/genera dinamicamente Cards cuando se busca en la caja de busqueda Search */
+/* Ejemplo si estamos en pantalla/seccion Contacto se puede hacer una busqueda en Search y luego renderiza el filtro de productos */
 function productListFilter(productoResult) {
 	let html;
 	app.innerHTML = '';
@@ -455,14 +481,13 @@ function productListFilter(productoResult) {
 	productoResult.forEach(item => {
 		html = `
 			<div class="card">
-			<img src="${item.image}" class="imagen-producto u-full-width">
-
-			<div class="info-card">
-				<h4>${item.title}</h4>
-				<p class="precio"><span class="u-pull-right">${item.price}</span></p>
-				<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${item.id}">Agregar al Carrito</a>
+				<img src="${item.image}" class="imagen-producto u-full-width">
+				<div class="info-card">
+					<h4>${item.title}</h4>
+					<p class="precio"><span class="u-pull-right">${item.price}</span></p>
+					<a href="#" class="u-full-width button-primary button input agregar-carrito" data-id="${item.id}">Agregar al Carrito</a>
 				</div>
-		</div>
+			</div>
 		`
 
 		app.innerHTML += html;
