@@ -19,7 +19,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd jmr85.github.io
+  cd ecommerce-spa
 ```
 
 Run with [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
