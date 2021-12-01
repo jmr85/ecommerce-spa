@@ -13,7 +13,7 @@ Developed with:
 Clone the project
 
 ```bash
-  git clone https://github.com/jmr85/ecommerce-spa.github.io.git
+  git clone https://github.com/jmr85/ecommerce-spa.git
 ```
 
 Go to the project directory
